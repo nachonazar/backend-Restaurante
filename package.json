@@ -1,0 +1,21 @@
+{
+  "name": "backend-restaurant",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nachonazar/backend-Restaurante.git"
+  },
+  "keywords": [],
+  "author": "Martinez Rodriguez Facundo, Nazar Ignacio",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/nachonazar/backend-Restaurante/issues"
+  },
+  "homepage": "https://github.com/nachonazar/backend-Restaurante#readme",
+  "description": "Backend de un Restaurante"
+}
