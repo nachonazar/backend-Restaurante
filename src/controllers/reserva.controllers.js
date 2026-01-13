@@ -62,3 +62,18 @@ export const borrarReservaPorId = async (req, res) => {
         res.status(500).json({ mensaje: "Error al borrar la reserva"})
     }
 }
+
+export const editarReservaPorId = async (req, res) => {
+    try {
+        //1- buscar la reserva por id y luego editar
+        const reservaModificada = await Reserva.findByIdAndUpdate(req.params.id, req.body)
+        if(!reservaModificada){
+            return res.status(404).json({ mensaje: "Reserva no encontrada"})
+        }
+        //2- responder al front
+        res.status(200).json({ mensaje: "Reserva actualizada exitosamente"})
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ mensaje: "Error al editar la reserva" })
+    }
+}
