@@ -31,3 +31,22 @@ export const crearReserva = async (req, res) => {
         res.status(500).json({ mensaje: "Error al crear la reserva"})    
     }
 }
+
+export const leerReservaPorId = async (req, res) => {
+    try {
+        //1- obtener el parametro del request
+        console.log(req.params)
+        console.log(req.params.id)
+        //2- pedir a mongoose que encuentre la reserva con tal id
+        const reservaBuscada = await Reserva.findById(req.params.id)
+        if(!reservaBuscada){
+            return res.status(404).json({ mensaje: "Reserva no encontrada"})
+        }
+        console.log(reservaBuscada)
+        //3-responder al front
+        res.status(200).json(reservaBuscada)
+    } catch (error) {
+        console.error(error)
+        
+    }
+}
