@@ -35,18 +35,30 @@ export const crearReserva = async (req, res) => {
 export const leerReservaPorId = async (req, res) => {
     try {
         //1- obtener el parametro del request
-        console.log(req.params)
-        console.log(req.params.id)
         //2- pedir a mongoose que encuentre la reserva con tal id
         const reservaBuscada = await Reserva.findById(req.params.id)
         if(!reservaBuscada){
             return res.status(404).json({ mensaje: "Reserva no encontrada"})
         }
-        console.log(reservaBuscada)
         //3-responder al front
         res.status(200).json(reservaBuscada)
     } catch (error) {
         console.error(error)
         
+    }
+}
+
+export const borrarReservaPorId = async (req, res) => {
+    try {
+        //1- buscar la reserva por id y luego borrar
+        const reservaEliminada = await Reserva.findByIdAndDelete(req.params.id)
+        if(!reservaEliminada){
+            return res.status(404).json({ mensaje: "Reserva no encontrada"})
+        }
+        //2-responder al front
+        res.status(200).json({ mensaje: "Reserva borrada exitosamente"})
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ mensaje: "Error al borrar la reserva"})
     }
 }
