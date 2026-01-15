@@ -31,3 +31,50 @@ export const crearUsuario = async (req, res) => {
     res.status(500).json({ mensaje: "Error al crear el usuario" });
   }
 };
+
+export const leerUsuariosPorId = async (req, res) => {
+  try {
+    //1- obtener el parametro del request
+    //2- pedir a mongoose que encuentre la reserva con tal id
+    const usuarioBuscado = await Usuario.findById(req.params.id);
+    if (!usuarioBuscado) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+    //3- responder al front
+    res.status(200).json(usuarioBuscado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al obtener el usuario" });
+  }
+};
+
+export const borrarUsuariosPorId = async (req, res) => {
+  try {
+    //1- buscar el usuario por el id y luego borrar
+    const usuarioEliminado = await Usuario.findByIdAndDelete(req.params.id);
+    if (!usuarioEliminado) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+    //2- responder al front
+    res.status(200).json({ mensaje: "Usuario eliminado correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al borrar el usuario" });
+  }
+};
+
+export const editarUsuariosPorId = async (req, res) => {
+  try {
+    //1- obtener el parametro del request
+    //2- pedir a mongoose que encuentre la reserva con tal id
+    const usuarioEditado = await Usuario.findByIdAndUpdate(req.params.id, req.body);
+    if (!usuarioEditado) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+    //3- responder al front
+    res.status(200).json({ mensaje: "Usuario actualizado correctamente"});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al editar el usuario" });
+  }
+};
