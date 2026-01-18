@@ -1,4 +1,5 @@
 import Usuario from "../models/usuario.js";
+import bcrypt from "bcrypt";
 
 export const prueba = (req, res) => {
   res.status(200);
@@ -22,7 +23,17 @@ export const crearUsuario = async (req, res) => {
     //1- recibir el objeto que tengo que agregar a la BD
     //2- validar los datos del objeto
     //3- guardar el objeto en la BD
-    const nuevoUsuario = new Usuario(req.body);
+    //hashear el password
+    const { nombreUsuario, email, password } = req.body;
+    const saltos = bcrypt.genSaltSync(10);
+    console.log(saltos);
+    const passwordHash = bcrypt.hashSync(password, saltos);
+    console.log(passwordHash);
+    const nuevoUsuario = new Usuario({
+      nombreUsuario,
+      email,
+      password: passwordHash,
+    });
     await nuevoUsuario.save();
     //4- enviar respuesta
     res.status(201).json({ mensaje: "Usuario creado correctamente" });
@@ -67,12 +78,15 @@ export const editarUsuariosPorId = async (req, res) => {
   try {
     //1- obtener el parametro del request
     //2- pedir a mongoose que encuentre la reserva con tal id
-    const usuarioEditado = await Usuario.findByIdAndUpdate(req.params.id, req.body);
+    const usuarioEditado = await Usuario.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+    );
     if (!usuarioEditado) {
       return res.status(404).json({ mensaje: "Usuario no encontrado" });
     }
     //3- responder al front
-    res.status(200).json({ mensaje: "Usuario actualizado correctamente"});
+    res.status(200).json({ mensaje: "Usuario actualizado correctamente" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: "Error al editar el usuario" });

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/nachonazar/backend-Restaurante#readme",
   "description": "Backend de un Restaurante",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "express-validator": "^7.3.1",
