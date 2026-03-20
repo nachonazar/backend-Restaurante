@@ -1,9 +1,20 @@
-import Server from "./server/config.js";
-import router from "./src/routes/index.routes.js";
+import "dotenv/config";
+import app from "./app.js";
+import connectDB from "./src/config/db.js";
 
-const server = new Server();
+const PORT = process.env.PORT || 3001;
 
-//agregar las rutas
-server.app.use("/api", router);
+connectDB();
 
-server.listen();
+app.listen(PORT, () => {
+  console.info(`Servidor corriendo en http://localhost:${PORT}`);
+});
+```
+
+---
+
+**`.env`**
+```
+MONGODB_URI=cadena123
+JWT_SECRET=clave123
+PORT=3001
