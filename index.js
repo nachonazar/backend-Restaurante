@@ -9,12 +9,3 @@ connectDB();
 app.listen(PORT, () => {
   console.info(`Servidor corriendo en http://localhost:${PORT}`);
 });
-```
-
----
-
-**`.env`**
-```
-MONGODB_URI=cadena123
-JWT_SECRET=clave123
-PORT=3001
