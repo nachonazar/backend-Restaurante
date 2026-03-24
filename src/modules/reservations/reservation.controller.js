@@ -1,4 +1,4 @@
-import Reserva from "../models/reserva.js";
+import Reservation from "./reservation.model.js";
 
 export const test = (req, res) => {
   res.status(200);
@@ -44,7 +44,7 @@ export const leerReservaPorId = async (req, res) => {
         res.status(200).json(reservaBuscada)
     } catch (error) {
         console.error(error)
-        
+        res.status(500).json({ mensaje: "Error al leer la reserva" })
     }
 }
 
