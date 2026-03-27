@@ -21,4 +21,4 @@ router.patch("/:id/suspend", verifyToken, requireAdmin, suspendOneUser);
 router.patch("/:id/activate", verifyToken, requireAdmin, activateOneUser);
 router.delete("/:id", verifyToken, requireAdmin, deleteOneUser);
 
-export default router;
+export default router; 
