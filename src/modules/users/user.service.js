@@ -13,7 +13,9 @@ export const getUserById = async (id) => {
 };
 
 export const updateUser = async (id, data) => {
-  const user = await User.findByIdAndUpdate(id, data, { new: true }).select("-password");
+  const user = await User.findByIdAndUpdate(id, data, { new: true }).select(
+    "-password",
+  );
   if (!user) throw new AppError("Usuario no encontrado", 404);
   return user;
 };
@@ -22,7 +24,7 @@ export const suspendUser = async (id) => {
   const user = await User.findByIdAndUpdate(
     id,
     { status: "Suspendido" },
-    { new: true }
+    { new: true },
   ).select("-password");
   if (!user) throw new AppError("Usuario no encontrado", 404);
   return user;
@@ -32,7 +34,7 @@ export const activateUser = async (id) => {
   const user = await User.findByIdAndUpdate(
     id,
     { status: "Activo" },
-    { new: true }
+    { new: true },
   ).select("-password");
   if (!user) throw new AppError("Usuario no encontrado", 404);
   return user;

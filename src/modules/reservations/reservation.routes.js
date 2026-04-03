@@ -12,24 +12,49 @@ import {
   leerReservaPorId,
   editarReservaPorId,
   borrarReservaPorId,
+  leerSlotsDisponibles,
+  leerMisReservas,
+  cancelarReserva,
+  actualizarEstadoReserva,
+  obtenerEstadisticas,
+  obtenerTendencia,
+  obtenerHorasPico,
 } from "./reservation.controller.js";
 
 const router = Router();
 
-router
-  .route("/")
-  .get(verifyToken, leerReservas)
-  .post(verifyToken, validateCreateReservation, handleValidation, crearReserva);
+// --- PÚBLICAS ---
+router.get("/slots", leerSlotsDisponibles);
 
-router
-  .route("/:id")
-  .get(verifyToken, leerReservaPorId)
-  .delete(verifyToken, borrarReservaPorId)
-  .put(
-    verifyToken,
-    validateUpdateReservation,
-    handleValidation,
-    editarReservaPorId,
-  );
+// --- ESTADÍSTICAS (ANTES DE /:id) ---
+//arriba para que express las atrape antes de confundirlas con un ID
+router.get("/stats", verifyToken, requireAdmin, obtenerEstadisticas);
+router.get("/stats/trend", verifyToken, requireAdmin, obtenerTendencia);
+router.get("/stats/peak-hours", verifyToken, requireAdmin, obtenerHorasPico);
+
+// --- USUARIO AUTENTICADO ---
+router.get("/my-reservations", verifyToken, leerMisReservas);
+router.post(
+  "/",
+  verifyToken,
+  validateCreateReservation,
+  handleValidation,
+  crearReserva,
+);
+router.patch("/:id/cancel", verifyToken, cancelarReserva);
+
+// --- SOLO ADMIN ---
+router.get("/", verifyToken, requireAdmin, leerReservas);
+router.get("/:id", verifyToken, requireAdmin, leerReservaPorId);
+router.put(
+  "/:id",
+  verifyToken,
+  requireAdmin,
+  validateUpdateReservation,
+  handleValidation,
+  editarReservaPorId,
+);
+router.patch("/:id", verifyToken, requireAdmin, actualizarEstadoReserva);
+router.delete("/:id", verifyToken, requireAdmin, borrarReservaPorId);
 
 export default router;

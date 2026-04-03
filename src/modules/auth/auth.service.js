@@ -35,7 +35,7 @@ export const registerService = async ({ username, email, password }) => {
   const token = jwt.sign(
     { id: user._id, role: user.role },
     process.env.JWT_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "7d" },
   );
 
   return {
@@ -48,15 +48,21 @@ export const registerService = async ({ username, email, password }) => {
 };
 
 export const loginService = async ({ username, password }) => {
-  // 1. Buscar usuario por userName
-  const user = await User.findOne({ userName: username });
+  // 1. Buscar por userName O por email
+  const user = await User.findOne({
+    $or: [{ userName: username }, { email: username }],
+  });
+
   if (!user) {
     throw new AppError("Usuario o contraseña incorrectos", 401);
   }
 
   // 2. Verificar si está suspendido
   if (user.status === "Suspendido") {
-    throw new AppError("Tu cuenta fue suspendida. Contactá al administrador", 403);
+    throw new AppError(
+      "Tu cuenta fue suspendida. Contactá al administrador",
+      403,
+    );
   }
 
   // 3. Comparar password
@@ -69,7 +75,7 @@ export const loginService = async ({ username, password }) => {
   const token = jwt.sign(
     { id: user._id, role: user.role },
     process.env.JWT_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "7d" },
   );
 
   return {
