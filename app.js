@@ -12,7 +12,17 @@ import { errorMiddleware } from "./src/middlewares/error.middleware.js";
 
 const app = express();
 
-app.use(cors());
+const origenesPermitidos = [
+  "http://localhost:5173", //localmente
+  "https://restaurant-front-topaz-iota.vercel.app", //frontend en Vercel
+];
+
+app.use(
+  cors({
+    origin: origenesPermitidos,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(morgan("dev"));
 

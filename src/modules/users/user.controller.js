@@ -59,4 +59,13 @@ export const deleteOneUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};  
+};
+
+export const getMe = async (req, res, next) => {
+  try {
+    const user = await getUserById(req.user.id);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
