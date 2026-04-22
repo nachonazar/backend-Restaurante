@@ -6,6 +6,10 @@ const PORT = process.env.PORT || 3001;
 
 connectDB();
 
-app.listen(PORT, () => {
-  console.info(`Servidor corriendo en http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.info(`Servidor corriendo en http://localhost:${PORT}`);
+  });
+}
+
+export default app;
