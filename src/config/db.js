@@ -6,7 +6,7 @@ const connectDB = async () => {
     console.info("MongoDB conectado");
   } catch (error) {
     console.error("Error conectando a MongoDB:", error);
-    process.exit(1);
+    // Sin process.exit(1) — en Vercel serverless esto mata la función
   }
 };
 
