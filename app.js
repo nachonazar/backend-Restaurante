@@ -20,10 +20,15 @@ app.use(morgan("dev"));
 
 // Middleware que conecta a MongoDB antes de cada request
 app.use(async (req, res, next) => {
-  if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(process.env.MONGODB_URI);
+  try {
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(process.env.MONGODB_URI);
+    }
+    next();
+  } catch (error) {
+    console.error("Error conectando MongoDB:", error.message);
+    res.status(500).json({ error: "Database connection failed" });
   }
-  next();
 });
 
 app.use("/api/auth", authRoutes);
