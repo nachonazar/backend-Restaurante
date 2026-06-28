@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { SLOT_CAPACITY } from "../../shared/scheduleConfig.js";
 
 const reservationSchema = new Schema({
   userId: {
@@ -10,7 +11,7 @@ const reservationSchema = new Schema({
   email:      { type: String, trim: true, lowercase: true },
   date:       { type: Date, required: true },
   time:       { type: String, required: true },
-  pax:        { type: Number, required: true, min: 1, max: 20 },
+  pax:        { type: Number, required: true, min: 1, max: SLOT_CAPACITY },
   status: {
     type: String,
     enum: ["Pendiente", "Confirmada", "Cancelada"],

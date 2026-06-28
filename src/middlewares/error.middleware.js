@@ -3,9 +3,13 @@ import AppError from "../shared/AppError.js";
 export const errorMiddleware = (error, req, res, next) => {
   // Error operacional — lo lanzamos con AppError
   if (error instanceof AppError) {
-    return res.status(error.statusCode).json({
+    const response = {
       message: error.message,
-    });
+    };
+
+    if (error.details) response.details = error.details;
+
+    return res.status(error.statusCode).json(response);
   }
 
   // Error de Mongoose — ID inválido

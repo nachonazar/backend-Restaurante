@@ -26,6 +26,14 @@ export const validateRegister = [
     .withMessage(
       "Mínimo 8 caracteres, 1 mayúscula, 2 números y 1 carácter especial",
     ),
+
+  body("phone")
+    .optional({ values: "falsy" })
+    .trim()
+    .isLength({ max: 30 })
+    .withMessage("Máximo 30 caracteres")
+    .matches(/^[0-9+()\-\s]*$/)
+    .withMessage("Teléfono inválido"),
 ];
 
 export const validateLogin = [

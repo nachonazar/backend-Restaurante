@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { SLOT_CAPACITY } from "../../shared/scheduleConfig.js";
 
 export const validateCreateReservation = [
   body("clientName")
@@ -25,8 +26,8 @@ export const validateCreateReservation = [
   body("pax")
     .notEmpty()
     .withMessage("La cantidad de personas es obligatoria")
-    .isInt({ min: 1, max: 20 })
-    .withMessage("Entre 1 y 20 personas"),
+    .isInt({ min: 1, max: SLOT_CAPACITY })
+    .withMessage(`Entre 1 y ${SLOT_CAPACITY} personas`),
 ];
 
 export const validateUpdateReservation = [
@@ -47,8 +48,8 @@ export const validateUpdateReservation = [
 
   body("pax")
     .optional()
-    .isInt({ min: 1, max: 20 })
-    .withMessage("Entre 1 y 20 personas"),
+    .isInt({ min: 1, max: SLOT_CAPACITY })
+    .withMessage(`Entre 1 y ${SLOT_CAPACITY} personas`),
 
   body("status")
     .optional()
