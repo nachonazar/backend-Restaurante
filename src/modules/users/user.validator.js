@@ -28,6 +28,14 @@ export const validateCreateUser = [
     ),
 
   body("role").optional().isIn(["User", "Admin"]).withMessage("Rol inválido"),
+
+  body("phone")
+    .optional({ values: "falsy" })
+    .trim()
+    .isLength({ max: 30 })
+    .withMessage("Máximo 30 caracteres")
+    .matches(/^[0-9+()\-\s]*$/)
+    .withMessage("Teléfono inválido"),
 ];
 
 export const validateUpdateUser = [
@@ -42,4 +50,12 @@ export const validateUpdateUser = [
   body("email").optional().trim().isEmail().withMessage("Email inválido"),
 
   body("role").optional().isIn(["User", "Admin"]).withMessage("Rol inválido"),
+
+  body("phone")
+    .optional({ values: "falsy" })
+    .trim()
+    .isLength({ max: 30 })
+    .withMessage("Máximo 30 caracteres")
+    .matches(/^[0-9+()\-\s]*$/)
+    .withMessage("Teléfono inválido"),
 ];

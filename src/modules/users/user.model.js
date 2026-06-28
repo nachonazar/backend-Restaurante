@@ -25,6 +25,13 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      trim: true,
+      maxlength: 30,
+      match: [/^[0-9+()\-\s]*$/, "Teléfono inválido"],
+      default: "",
+    },
     role: {
       type: String,
       enum: ["User", "Admin"],

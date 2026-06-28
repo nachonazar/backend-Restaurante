@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../users/user.model.js";
 import AppError from "../../shared/AppError.js";
 
-export const registerService = async ({ username, email, password }) => {
+export const registerService = async ({ username, email, password, phone = "" }) => {
   // 1. Verificar si el email ya existe
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -28,6 +28,7 @@ export const registerService = async ({ username, email, password }) => {
     userName: username,
     email,
     password: hashedPassword,
+    phone,
     role,
   });
 
@@ -42,6 +43,8 @@ export const registerService = async ({ username, email, password }) => {
     token,
     user: {
       userName: user.userName,
+      email: user.email,
+      phone: user.phone,
       role: user.role,
     },
   };
@@ -82,6 +85,8 @@ export const loginService = async ({ username, password }) => {
     token,
     user: {
       userName: user.userName,
+      email: user.email,
+      phone: user.phone,
       role: user.role,
     },
   };

@@ -35,6 +35,8 @@
 - 📅 **Motor de Reservas** — Lógica de validación de disponibilidad, control de fechas y estados de reserva.
 - 📊 **Agregación de Datos** — Consultas complejas a MongoDB para generar estadísticas del Dashboard (horas pico, tendencias).
 - 🛡️ **Seguridad Integral** — Middlewares de protección de rutas, validación de roles y control de CORS estricto.
+- 👥 **Usuarios con teléfono opcional** — El registro y la edición administrativa aceptan un teléfono simple y opcional.
+- 🍽️ **Capacidad por horario** — Varias reservas pueden compartir horario mientras la suma de comensales no exceda `SLOT_CAPACITY`.
 - ☁️ **Optimización Serverless** — Arquitectura adaptada para cold-starts eficientes en Vercel.
 
 ---
@@ -95,3 +97,15 @@ src/
 ├── shared/              # Utilidades: Clases de error (AppError) y validadores genéricos
 ├── app.js               # Configuración de Express, Middlewares y CORS (Punto de entrada Vercel)
 └── index.js             # Inicialización del servidor para entorno de desarrollo local
+```
+
+## 🔑 Variables de Entorno
+
+```env
+MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/database
+JWT_SECRET=change_me_in_local_env
+PORT=3001
+SLOT_CAPACITY=20
+```
+
+`SLOT_CAPACITY` es opcional. Si no se define, el backend usa `20` comensales por horario.

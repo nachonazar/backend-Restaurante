@@ -24,3 +24,10 @@ export const HORAS_DISPONIBLES = {
     "00:30",
   ],
 };
+
+const parsedSlotCapacity = Number(process.env.SLOT_CAPACITY);
+
+export const SLOT_CAPACITY =
+  Number.isInteger(parsedSlotCapacity) && parsedSlotCapacity > 0
+    ? parsedSlotCapacity
+    : 20;
